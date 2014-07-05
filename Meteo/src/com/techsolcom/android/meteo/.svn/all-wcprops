@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/android/!svn/ver/1068/Meteo/Meteo/src/com/techsolcom/android/meteo
+END
+ReaderCity.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/android/!svn/ver/1097/Meteo/Meteo/src/com/techsolcom/android/meteo/ReaderCity.java
+END
+IconMeteo.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/android/!svn/ver/1111/Meteo/Meteo/src/com/techsolcom/android/meteo/IconMeteo.java
+END
+City.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/android/!svn/ver/1068/Meteo/Meteo/src/com/techsolcom/android/meteo/City.java
+END
+ShowCityRestore.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/android/!svn/ver/1097/Meteo/Meteo/src/com/techsolcom/android/meteo/ShowCityRestore.java
+END
+ForecastMeteoData.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/android/!svn/ver/1078/Meteo/Meteo/src/com/techsolcom/android/meteo/ForecastMeteoData.java
+END
+MeteoActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/android/!svn/ver/1112/Meteo/Meteo/src/com/techsolcom/android/meteo/MeteoActivity.java
+END
+WindsMeteoData.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/android/!svn/ver/1070/Meteo/Meteo/src/com/techsolcom/android/meteo/WindsMeteoData.java
+END
+CurrentConditionMeteo.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/android/!svn/ver/1071/Meteo/Meteo/src/com/techsolcom/android/meteo/CurrentConditionMeteo.java
+END
+ReaderMeteo.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/android/!svn/ver/1078/Meteo/Meteo/src/com/techsolcom/android/meteo/ReaderMeteo.java
+END

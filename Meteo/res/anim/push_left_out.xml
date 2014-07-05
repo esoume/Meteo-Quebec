@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2012 Groupe Informatique TechSolCom.
+     TechSolCom Group.All rights reserved.
+
+     author : Emmanuel Soume
+     date : 09/01/2012
+     version : 1.0
+     Compagny : Techsolcom
+-->
+
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+	<translate android:fromXDelta="0" android:toXDelta="-100%p" android:duration="300"/>
+	<alpha android:fromAlpha="1.0" android:toAlpha="0.0" android:duration="300" />
+</set>

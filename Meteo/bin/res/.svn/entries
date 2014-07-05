@@ -1,0 +1,63 @@
+10
+
+dir
+1068
+http://cvs/svn/android/Meteo/Meteo/bin/res
+http://cvs/svn/android
+delete
+
+
+2012-01-11T21:18:42.622599Z
+1068
+esoume
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+f5e4b89b-1a93-4909-a24d-7c0e53db7085
+
+
+
+
+
+
+0
+
+drawable
+dir
+
+
+
+delete
+
+drawable-hdpi
+dir
+
+
+
+delete
+
+drawable-ldpi
+dir
+
+
+
+delete
+
+drawable-mdpi
+dir
+
+
+
+delete
+

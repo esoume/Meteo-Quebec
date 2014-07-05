@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2012 Groupe Informatique TechSolCom.
+     TechSolCom Group.All rights reserved.
+
+     author : Emmanuel Soume
+     date : 06/01/2012
+     version : 1.0
+     Compagny : Techsolcom
+-->
+<resources>
+
+    <string name="hello">Hello World, MeteoActivity!</string>
+    <string name="app_name">Météo</string>
+    <string name="btnModify">Ajouter</string>
+    <string name="btnDelete">Supprimer</string>
+    <string name="titleMeteo">Météo</string>
+    
+    <string name="pressure">Pression</string>
+    <string name="temperature">Temperature</string>
+    <string name="vent">Vent</string>
+    <string name="humidity">Humidité</string>
+    <string name="visibility">Visibilité</string>
+    
+    <string name="btnAdd">Ajouter</string>
+    <string name="btnClose">Fermer</string>
+    
+    <string name="alertOk">Ok</string>
+    <string name="alertCancel">Annuler</string>
+    <string name="titleListCity">Météo des villes</string>
+    <string name="messageCityDefault">Interdiction de supprimer la ville ou on se trouve</string>
+
+</resources>

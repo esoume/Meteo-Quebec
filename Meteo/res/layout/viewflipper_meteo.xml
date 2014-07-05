@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2012 Groupe Informatique TechSolCom.
+     TechSolCom Group.All rights reserved.
+
+     author : Emmanuel Soume
+     date : 06/01/2012
+     version : 1.0
+     Compagny : Techsolcom
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainScreen"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- header -->
+
+    <RelativeLayout
+        android:id="@+id/barHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_barre_titre"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/titleMeteo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="5dp"
+            android:text="@string/titleMeteo"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/separation"
+            android:gravity="center_vertical"
+            android:text="@string/btnDelete" />
+
+        <ImageView
+            android:id="@+id/separation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/btnModify"
+            android:gravity="center_vertical"
+            android:src="@drawable/filet_vertical" />
+
+        <Button
+            android:id="@+id/btnModify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:text="@string/btnModify" />
+    </RelativeLayout>
+    <!-- content -->
+
+    <LinearLayout
+        android:id="@+id/weather"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        android:gravity="center" >
+
+        <ProgressBar
+            android:id="@+id/weather_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPagerMeteo"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" 
+            android:visibility="visible">
+        </android.support.v4.view.ViewPager>
+    </LinearLayout>
+
+    <!--
+    <LinearLayout
+        android:id="@+id/weather"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:background="@color/white" >
+
+        <ProgressBar
+            android:id="@+id/weather_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            
+            android:visibility="gone" />
+
+        <ViewFlipper
+            android:id="@+id/viewPagerMeteo"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="visible">
+        </ViewFlipper>
+    </LinearLayout>
+    -->
+
+</LinearLayout>

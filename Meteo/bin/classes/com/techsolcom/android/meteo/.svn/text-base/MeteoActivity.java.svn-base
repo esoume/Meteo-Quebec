@@ -1,0 +1,292 @@
+package com.techsolcom.android.meteo;
+
+import java.util.ArrayList;
+
+import java.util.HashMap;
+import java.util.List;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
+
+/**
+ * @date 08/01/2012
+ * @author Emmanuel Soume (TechSolCom)
+ *
+ */
+
+public class MeteoActivity extends Activity /*implements OnTouchListener*/ {
+
+	CharSequence[] listItemsOfCity;
+	View viewLoader;
+	ArrayList<String> CityInFlipper; 
+	int numberCity =0;
+	
+	// on l obtient dans les prefernces
+	String provinceCityDefault = "Qc"; // prefs.getprovinceCityDefault();
+	String codeDefault = "s0000635"; // prefs.getCodeDefault();
+	String nameFrDefault = "Montreal"; // prefs.getNameFrDefault();
+	String nameEnDefault = "Montreal"; // prefs.getNameEnDefault();
+
+	TextView nameCity,temperature,messageInfoMeteo,humidite,metricHumidite,
+	vent,metricVent,pression,metricPression,visibilite,metricVisibilite,
+	today,temperatureToday,nextFirstDay,temperatureNextFirstDay,nextSecondDay,temperatureNextSecondDay;
+
+	ImageView iconCode,iconMeteoToday,iconMeteoNextFirstDay,iconMeteoNextSecondDay;
+    
+	// parsers de flux pour la liste de ville et les donnees meteos
+	ReaderCity reader;
+	ReaderMeteo meteo;
+
+
+	/** le flipper de la meteo des villes ajoutees*/
+	private ViewFlipper viewPagerMeteo;
+
+	/** Liste de parametres generaux de la langue*/
+	private TextView titleMeteo;
+
+	/** Liste de parametres generaux de la langue*/
+	private ListView listCityMeteo;
+
+	/** le bouton pour retour a l accueil principal*/
+	Button  btnBack;
+
+	/** le bouton pour choisir la meteo d une ville*/
+	Button btnModify;
+
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.viewflipper_meteo);
+		initialization();
+		
+		setCityMeteoDefault();
+
+		btnBack.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) 
+			{	
+				mainHome();
+			}
+		});
+
+		btnModify.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) 
+			{	
+				viewPagerMeteo.removeAllViews();
+				showListMeteoCity();
+
+			}
+		});
+
+	}
+
+	public void initialization(){
+
+		viewPagerMeteo = (ViewFlipper) findViewById(R.id.viewPagerMeteo);
+		
+		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		viewLoader=(View)inflater.inflate(R.layout.screen_meteo_city, null);
+
+		titleMeteo = ( TextView ) findViewById(R.id.titleMeteo);
+		listCityMeteo  = (ListView) findViewById(R.id.listCityMeteo);
+		btnBack = (Button) findViewById(R.id. btnBack);
+		btnModify = (Button) findViewById(R.id. btnModify);
+
+		nameCity = ( TextView ) viewLoader.findViewById(R.id.nameCity);
+		temperature = ( TextView ) viewLoader.findViewById(R.id.temperature);
+		messageInfoMeteo = ( TextView ) viewLoader.findViewById(R.id.messageInfoMeteo);
+
+		humidite = ( TextView ) viewLoader.findViewById(R.id.humidite);
+		vent = ( TextView ) viewLoader.findViewById(R.id.vent);
+		pression = ( TextView ) viewLoader.findViewById(R.id.pression);
+		visibilite = ( TextView ) viewLoader.findViewById(R.id.visibilite);
+
+		today = ( TextView ) viewLoader.findViewById(R.id.today);
+		temperatureToday = ( TextView ) viewLoader.findViewById(R.id.temperatureToday);
+
+		nextFirstDay = ( TextView ) viewLoader.findViewById(R.id.nextFirstDay);
+		temperatureNextFirstDay = ( TextView ) viewLoader.findViewById(R.id.temperatureNextFirstDay);
+
+		nextSecondDay = ( TextView ) viewLoader.findViewById(R.id.nextSecondDay);
+		temperatureNextSecondDay = ( TextView ) viewLoader.findViewById(R.id.temperatureNextSecondDay);
+
+		iconCode = (ImageView) viewLoader.findViewById(R.id.iconCode);
+		iconMeteoToday = (ImageView) viewLoader.findViewById(R.id.iconMeteoToday);
+		iconMeteoNextFirstDay = (ImageView) viewLoader.findViewById(R.id.iconMeteoNextFirstDay);
+		iconMeteoNextSecondDay = (ImageView) viewLoader.findViewById(R.id.iconMeteoNextSecondDay);
+	}
+
+	public void showListMeteoCity(){
+
+		//On instancie notre layout en tant que View
+		LayoutInflater factory = LayoutInflater.from(this);
+		final View list = factory.inflate(R.layout.list_city_meteo, null);
+
+		//Creation de l'AlertDialog
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		//builder.setIcon(R.drawable.ic_popup_reminder)
+		builder.setTitle(R.string.titleListCity);
+
+		listCityMeteo = (ListView) list.findViewById(R.id.listCityMeteo);
+		// on cree notre liste pour changer de langue
+		String[] from = new String[] {"city"/*,"state"*/};
+		int[] to = new int[] { R.id.nameCityMeteo/*,R.id.checkBoxCity*/};
+
+		// prepare notre les liste de ville
+		List<HashMap<String, Object>> cityMeteo = new ArrayList<HashMap<String, Object>>();
+
+		reader = new ReaderCity("http://dd.meteo.ec.gc.ca/citypage_weather/xml/siteList.xml");
+
+		List<String> listCity = reader.getList();
+
+		final CharSequence[] listItemsOfCity = new CharSequence[listCity.size()];
+
+		HashMap<String, Object> mapNameCity = new HashMap<String, Object>();
+
+		for(int i=0;i< listCity.size();i++){
+			listItemsOfCity[i] = String.valueOf(listCity.get(i)); 
+
+			// ajoute des items dans la liste
+			mapNameCity = new HashMap<String, Object>();
+			mapNameCity.put("city",listItemsOfCity[i]);
+			cityMeteo.add(mapNameCity);
+
+
+		}
+
+		// on configure notre adaptateur
+		SimpleAdapter adapter = new SimpleAdapter(this,cityMeteo,R.layout.list_item_2_parametres,from,to);
+
+		listCityMeteo.setAdapter(adapter);
+
+		//ajout d un listener au clic dans la liste
+		listCityMeteo.setOnItemClickListener(new OnItemClickListener() {
+			//@Override
+			public void onItemClick(AdapterView<?> a,View v,int position,long id) {}
+		});
+
+		builder.setItems(listItemsOfCity,new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int position) {
+
+				//take the HashMap content infos of our item
+				HashMap<String, Object> map = (HashMap<String, Object>) listCityMeteo.getItemAtPosition(position);
+				String city = (String)map.get("city");
+
+				if(city.equals(listItemsOfCity[position])) {
+					nameCity.setText(listItemsOfCity[position]);
+
+					for( City c : reader.getProvinceQuebecMeteo() ){
+						if(c.getNameCityEnglish().equals(city) || c.getNameCityFrench().equals(city)){
+
+							//CityInFlipper.add(city);
+							getMeteoCity(c.getCode());
+						}
+					}
+
+					// on ajoute la ville dans les preferences
+				}
+
+			}
+
+		})
+		.setNegativeButton(R.string.alertCancel, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichItem) {
+				dialog.cancel();
+			}
+		});
+
+		builder.create().show();
+	}
+
+	public void mainHome(){
+
+	}
+
+	public void setFlipperMeteo(){
+		viewPagerMeteo.addView(viewLoader/*,numberCity*/);
+	}
+
+	public void setCityMeteoDefault(){
+		numberCity = numberCity + 1;
+		getMeteoCity(new City(codeDefault,nameEnDefault,nameFrDefault,provinceCityDefault).getCode());
+	}
+
+	public void getMeteoCity(String code){
+
+		// cette url doit etre refaite (pas beau !!)
+		String url = "http://dd.meteo.ec.gc.ca/citypage_weather/xml/QC/"+code+"_f.xml"; //SiteCode_X.xml";
+		meteo = new ReaderMeteo(url);
+		setFlipperMeteo();
+		setInfoMeteoCity();
+
+	}
+
+	public void setInfoMeteoCity(){
+
+		if(meteo.getCurrentCondition().size() > 0 && meteo.getCurrentCondition().get(0) != null){
+			humidite.setText(String.valueOf(meteo.getCurrentCondition().get(0).getRelativeHumidity()).concat(meteo.getCurrentCondition().get(0).getunityRelativeHumidity()));
+			pression.setText(String.valueOf(meteo.getCurrentCondition().get(0).getPressure()).concat(meteo.getCurrentCondition().get(0).getUnityPressure()));
+			visibilite.setText(String.valueOf(meteo.getCurrentCondition().get(0).getVisibility()).concat(meteo.getCurrentCondition().get(0).getUnityVisibility()));
+		}
+
+		if(meteo.getWinds().size() > 0 && meteo.getWinds().get(0) != null){
+			vent.setText(String.valueOf(meteo.getWinds().get(0).getSpeed()).concat(meteo.getWinds().get(0).getUnitySpeed()));
+		}
+
+		ForecastMeteoData meteoData;
+		if(meteo.getForecast().size() > 0 && meteo.getForecast().get(0) != null){
+			meteoData = meteo.getForecast().get(0);
+			messageInfoMeteo.setText(meteoData.getTextForecastSummary());	
+			temperature.setText(String.valueOf(meteoData.getTemperature()).concat(meteoData.getUnityTemperature()));
+
+			int iconSource = meteoData.getIconCode();
+			iconCode.setBackgroundDrawable(getResources().getDrawable(IconMeteo.getDrawableMeteo(iconSource)));
+
+		}		
+		if(meteo.getForecast().size() > 1 && meteo.getForecast().get(1) != null){
+			meteoData = meteo.getForecast().get(1);
+			today.setText(meteoData.getTextForecastName());
+			temperatureToday.setText(String.valueOf(meteoData.getTemperature()).concat(meteoData.getUnityTemperature()));	
+
+			int iconSource = meteoData.getIconCode();
+			iconMeteoToday.setBackgroundDrawable(getResources().getDrawable(IconMeteo.getDrawableMeteo(iconSource)));
+
+		}
+		if(meteo.getForecast().size() > 2 && meteo.getForecast().get(2) != null){
+			meteoData = meteo.getForecast().get(2);
+			nextFirstDay.setText(meteoData.getTextForecastName());
+			temperatureNextFirstDay.setText(String.valueOf(meteoData.getTemperature()).concat(meteoData.getUnityTemperature()));
+
+			int iconSource = meteoData.getIconCode();
+			iconMeteoNextFirstDay.setBackgroundDrawable(getResources().getDrawable(IconMeteo.getDrawableMeteo(iconSource)));
+
+		}
+		if(meteo.getForecast().size() > 3 && meteo.getForecast().get(3) != null){
+			meteoData = meteo.getForecast().get(3);
+			nextSecondDay.setText(meteoData.getTextForecastName());
+			temperatureNextSecondDay.setText(String.valueOf(meteoData.getTemperature()).concat(meteoData.getUnityTemperature()));
+
+			int iconSource = meteoData.getIconCode();
+			iconMeteoNextSecondDay.setBackgroundDrawable(getResources().getDrawable(IconMeteo.getDrawableMeteo(iconSource)));
+
+		}			
+	}
+}

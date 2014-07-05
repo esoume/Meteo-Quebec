@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/android/!svn/ver/1068/Meteo/Meteo/res/layout
+END
+screen_meteo_city.xml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/android/!svn/ver/1088/Meteo/Meteo/res/layout/screen_meteo_city.xml
+END
+list_city_restore.xml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/android/!svn/ver/1109/Meteo/Meteo/res/layout/list_city_restore.xml
+END
+list_item_2_parametres.xml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/android/!svn/ver/1109/Meteo/Meteo/res/layout/list_item_2_parametres.xml
+END
+viewflipper_meteo.xml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/android/!svn/ver/1109/Meteo/Meteo/res/layout/viewflipper_meteo.xml
+END
+list_city_meteo.xml
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/android/!svn/ver/1068/Meteo/Meteo/res/layout/list_city_meteo.xml
+END
+list_item_1_parametre.xml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/android/!svn/ver/1109/Meteo/Meteo/res/layout/list_item_1_parametre.xml
+END

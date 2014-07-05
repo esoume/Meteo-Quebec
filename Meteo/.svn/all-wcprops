@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/android/!svn/ver/1067/Meteo/Meteo
+END
+AndroidManifest.xml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/android/!svn/ver/1098/Meteo/Meteo/AndroidManifest.xml
+END
+project.properties
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/android/!svn/ver/1068/Meteo/Meteo/project.properties
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/android/!svn/ver/1068/Meteo/Meteo/.project
+END
+proguard.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/android/!svn/ver/1068/Meteo/Meteo/proguard.cfg
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/android/!svn/ver/1068/Meteo/Meteo/.classpath
+END
